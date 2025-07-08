@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f9f9f9; }
+    .summary, .qr { margin-top: 20px; }
+    .header { text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>SmartBill Pro</h2>
+    <p>Professional Invoice Billing System</p>
+  </div>
+
+  <p><strong>Invoice ID:</strong> {{ data.invoice_id }}</p>
+  <p><strong>Date:</strong> {{ data.date }}</p>
+  <p><strong>Customer:</strong> {{ data.customer_name }}<br>
+     <strong>Email:</strong> {{ data.customer_email }}</p>
+
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price ({{ data.currency }})</th>
+      <th>Amount ({{ data.currency }})</th>
+    </tr>
+    {% for item in data.invoice_items %}
+    <tr>
+      <td>{{ item.item }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.amount }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <div class="summary">
+    <p><strong>Subtotal:</strong> {{ data.currency }}{{ '%.2f'|format(data.subtotal) }}</p>
+    <p><strong>GST (18%):</strong> {{ data.currency }}{{ '%.2f'|format(data.gst_amount) }}</p>
+    <p><strong>Total:</strong> {{ data.currency }}{{ '%.2f'|format(data.total_amount) }}</p>
+  </div>
+
+  <div class="qr">
+    <p><strong>Scan to verify:</strong></p>
+    <img src="data:image/png;base64,{{ data.qr_base64 }}" width="150">
+  </div>
+</body>
+</html>

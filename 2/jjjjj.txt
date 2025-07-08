@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>SmartBill Pro - Invoice Generator</title></head>
+<body>
+<h2>SmartBill Pro - Create Invoice</h2>
+<form action="/generate" method="POST">
+    <label>Customer Name:</label><br>
+    <input type="text" name="customer_name" required><br><br>
+
+    <label>Customer Email:</label><br>
+    <input type="email" name="customer_email" required><br><br>
+
+    <label>Currency:</label><br>
+    <select name="currency">
+        <option value="INR">₹ INR</option>
+        <option value="USD">$ USD</option>
+        <option value="EUR">€ EUR</option>
+    </select><br><br>
+
+    <div id="items">
+        <h4>Items:</h4>
+        <div>
+            <input type="text" name="item[]" placeholder="Item Name" required>
+            <input type="number" name="quantity[]" placeholder="Quantity" required>
+            <input type="number" name="price[]" step="0.01" placeholder="Price" required>
+        </div>
+    </div><br>
+
+    <button type="button" onclick="addItem()">+ Add Item</button><br><br>
+    <button type="submit">Generate Invoice</button>
+</form>
+
+<script>
+function addItem() {
+    const div = document.createElement('div');
+    div.innerHTML = `<input type="text" name="item[]" placeholder="Item Name" required>
+                     <input type="number" name="quantity[]" placeholder="Quantity" required>
+                     <input type="number" name="price[]" step="0.01" placeholder="Price" required>`;
+    document.getElementById('items').appendChild(div);
+}
+</script>
+</body>
+</html>
